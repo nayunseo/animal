@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>심리테스트</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; margin: 0; padding: 20px; display: flex; justify-content: center; }
+    #container { background: white; padding: 20px; border-radius: 10px; max-width: 500px; width: 100%; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    button { width: 100%; margin: 10px 0; padding: 15px; font-size: 16px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #45a049; }
+    img { max-width: 100%; border-radius: 10px; margin-top: 15px; }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="question-box">
+      <h2 id="question">Q1. 친구를 처음 만나면?</h2>
+      <button onclick="select('A')">조용히 지켜본다</button>
+      <button onclick="select('B')">먼저 말을 건다</button>
+    </div>
+    <div id="result-box" style="display:none;">
+      <h2 id="result-title"></h2>
+      <img id="result-img" src="" alt="">
+      <p id="result-desc"></p>
+    </div>
+  </div>
+  <script>
+    const q = [
+      { q: "Q1. 친구를 처음 만나면?", a: { A: "조용히 지켜본다", B: "먼저 말을 건다" } },
+      { q: "Q2. 주말엔?", a: { A: "혼자 쉬기", B: "사람들과 어울리기" } },
+      { q: "Q3. 좋아하는 날씨는?", a: { A: "비 오는 날", B: "맑은 날" } }
+    ];
+    let now = 0, score = { A: 0, B: 0 };
+    function select(ans) {
+      score[ans]++;
+      now++;
+      if (now < q.length) {
+        document.getElementById("question").innerText = q[now].q;
+        const btns = document.querySelectorAll("button");
+        btns[0].innerText = q[now].a.A;
+        btns[1].innerText = q[now].a.B;
+      } else {
+        showResult();
+      }
+    }
+    function showResult() {
+      document.getElementById("question-box").style.display = "none";
+      document.getElementById("result-box").style.display = "block";
+      let t = "", d = "", i = "";
+      if (score.A > score.B) {
+        t = "🐱 당신은 고양이!";
+        d = "조용하고 섬세한 성격입니다.";
+        i = "https://cdn.pixabay.com/photo/2017/11/09/21/41/cat-2934720_1280.jpg";
+      } else if (score.B > score.A) {
+        t = "🐶 당신은 강아지!";
+        d = "명랑하고 활발한 성격입니다.";
+        i = "https://cdn.pixabay.com/photo/2016/02/19/10/00/dog-1209744_1280.jpg";
+      } else {
+        t = "🐰 당신은 토끼!";
+        d = "감성적이고 배려심 많은 성격입니다.";
+        i = "https://cdn.pixabay.com/photo/2020/04/16/18/00/rabbit-5051727_1280.jpg";
+      }
+      document.getElementById("result-title").innerText = t;
+      document.getElementById("result-desc").innerText = d;
+      document.getElementById("result-img").src = i;
+    }
+  </script>
+</body>
+</html>
